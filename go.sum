@@ -1,0 +1,4 @@
+github.com/liamzdenek/go-pthreads v0.0.0-20140916091500-ccaf4c64741e h1:j5141/vsM1qP0kg0Ez1gr7PD/DMYrLA+YclclImjzN0=
+github.com/liamzdenek/go-pthreads v0.0.0-20140916091500-ccaf4c64741e/go.mod h1:wNoRc++SkjS2AKnu+PInlCRLIB72RbEznXbnsh0LNI0=
+github.com/satrobit/go-pthreads v0.0.0-20200708205415-9eb22d17e0c2 h1:eINP4qLlt5m4nM11rxkwR4leFddL6braMf+UQBqOf7A=
+github.com/satrobit/go-pthreads v0.0.0-20200708205415-9eb22d17e0c2/go.mod h1:GdkAMw2Nlmma2S0MiWKeCJ9lWxZ9LWvCx/5QMcmBsNI=

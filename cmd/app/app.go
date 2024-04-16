@@ -8,6 +8,8 @@ import (
 	sobelfilter "sobel/internal/filters/sobel_filter"
 	"sync"
 	"time"
+
+	pthread "github.com/satrobit/go-pthreads"
 )
 
 func Run(img image.Image, numOfThreads int) (*image.RGBA, error) {
@@ -22,14 +24,16 @@ func Run(img image.Image, numOfThreads int) (*image.RGBA, error) {
 	gradient := make([][]uint8, h)
 	startY := 1
 	endY := countStr - 1
-	wg := sync.WaitGroup{}
+	wg := &sync.WaitGroup{}
 	s := time.Now()
 	for t := 0; t < numOfThreads; t++ {
 		wg.Add(1)
-		go func(startY, endY, t int) {
-			defer wg.Done()
-			sobelfilter.Process(startY, endY, gray, &gradient)
-		}(startY, endY, t)
+		func(wg *sync.WaitGroup, startY, endY, t int) {
+			pthread.Create(func() {
+				defer wg.Done()
+				sobelfilter.Process(startY, endY, gray, &gradient)
+			})
+		}(wg, startY, endY, t)
 
 		startY = endY
 		if t+1 == numOfThreads-1 {
@@ -40,7 +44,6 @@ func Run(img image.Image, numOfThreads int) (*image.RGBA, error) {
 	}
 	wg.Wait()
 	fmt.Println(time.Since(s))
-
 	new := image.NewRGBA(bounds)
 	for y := 1; y < h-1; y++ {
 		for x := 1; x < w-1; x++ {
