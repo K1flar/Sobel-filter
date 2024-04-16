@@ -16,16 +16,20 @@ var (
 	}
 )
 
-func Process(colors [][]uint8) [][]uint8 {
+func Process(startY, endY int, colors [][]uint8, res *[][]uint8) {
 	h := len(colors)
 	w := len(colors[0])
-	res := make([][]uint8, h)
 
-	for y := 1; y < h-1; y++ {
-		res[y] = make([]uint8, w)
+	if (*res) == nil {
+		(*res) = make([][]uint8, h)
+	}
+
+	for y := startY; y < endY; y++ {
+		if (*res)[y] == nil {
+			(*res)[y] = make([]uint8, w)
+		}
 		for x := 1; x < w-1; x++ {
 			gx, gy := 0, 0
-
 			// Применяем ядра фильтра Собела к пикселям изображения
 			for k := -1; k <= 1; k++ {
 				for l := -1; l <= 1; l++ {
@@ -34,9 +38,7 @@ func Process(colors [][]uint8) [][]uint8 {
 				}
 			}
 
-			res[y][x] = uint8(math.Sqrt(float64(gx*gx + gy*gy)))
+			(*res)[y][x] = uint8(math.Sqrt(float64(gx*gx + gy*gy)))
 		}
 	}
-
-	return res
 }
