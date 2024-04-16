@@ -28,12 +28,12 @@ func Run(img image.Image, numOfThreads int) (*image.RGBA, error) {
 	s := time.Now()
 	for t := 0; t < numOfThreads; t++ {
 		wg.Add(1)
-		func(wg *sync.WaitGroup, startY, endY, t int) {
+		func(startY, endY, t int) {
 			pthread.Create(func() {
 				defer wg.Done()
 				sobelfilter.Process(startY, endY, gray, &gradient)
 			})
-		}(wg, startY, endY, t)
+		}(startY, endY, t)
 
 		startY = endY
 		if t+1 == numOfThreads-1 {
