@@ -17,19 +17,19 @@ func main() {
 
 	f, err := os.Open(os.Args[1])
 	if err != nil {
-		fmt.Println("No image path")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	img, _, err := image.Decode(f)
 	if err != nil {
-		fmt.Println("No image path")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
 	newImg, err := app.Run(img, 32)
 	if err != nil {
-		fmt.Println("No image path")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 
