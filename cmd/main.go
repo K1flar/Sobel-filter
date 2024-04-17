@@ -5,6 +5,7 @@ import (
 	"image"
 	"os"
 	"sobel/cmd/app"
+	"strings"
 
 	"image/png"
 )
@@ -33,7 +34,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	out, err := os.Create(os.Args[1] + "_filter.png")
+	out, err := os.Create(strings.TrimSuffix(os.Args[1], ".png") + "_filter.png")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
